@@ -9,6 +9,6 @@ async function bootstrap() {
     new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
   );
   app.useLogger(app.get(Logger));
-  await app.listen(process.env.port ?? 3000);
+  await app.listen(3000);
 }
 bootstrap();

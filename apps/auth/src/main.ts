@@ -1,6 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import cookieParser from 'cookie-parser';
 import { Logger } from 'nestjs-pino/Logger';
 import { AuthModule } from './auth.module';
 
@@ -9,6 +10,7 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
   );
+  app.use(cookieParser());
   app.useLogger(app.get(Logger));
   const configService = app.get(ConfigService);
   await app.listen(configService.get('PORT') || 3001);

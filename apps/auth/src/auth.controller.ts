@@ -16,7 +16,9 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ) {
     // const jwt = await this.authService.login(user, response);
-    // response.send(jwt);
+    // eslint-disable-next-line @typescript-eslint/await-thenable
+    await this.authService.login(user, response);
+    response.send(user);
   }
 
   // @UseGuards(JwtAuthGuard)

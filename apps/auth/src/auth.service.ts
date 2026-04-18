@@ -1,8 +1,7 @@
+import { UserDocument } from '@app/common/models/user.schema';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AuthService {
-  getHello(): string {
-    return 'Hello World!';
-  }
+  async login(user: UserDocument, response: Response) {}
 }

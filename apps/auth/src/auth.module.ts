@@ -16,7 +16,7 @@ import { UsersModule } from './users/users.module';
       validationSchema: Joi.object({
         MONGODB_URI: Joi.string().required(),
         JWT_SECRET: Joi.string().required(),
-        JWT_EXPIRES_IN: Joi.string().required(),
+        JWT_EXPIRATION: Joi.string().required(),
         PORT: Joi.number().required(),
       }),
     }),
@@ -24,7 +24,7 @@ import { UsersModule } from './users/users.module';
       useFactory: (configService: ConfigService) => ({
         secret: configService.get('JWT_SECRET'),
         signOptions: {
-          expiresIn: configService.get('JWT_EXPIRES_IN'),
+          expiresIn: configService.get('JWT_EXPIRATION'),
         },
       }),
       inject: [ConfigService],

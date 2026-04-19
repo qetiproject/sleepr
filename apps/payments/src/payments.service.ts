@@ -5,14 +5,17 @@ import { PaymentsCreateChargeDto } from './dto/payments-create-charge.dto';
 
 @Injectable()
 export class PaymentsService {
-  private readonly stripe = new Stripe(
-    this.configService.get('STRIPE_SECRET_KEY'),
-    {
-      apiVersion: '2023-08-16',
-    },
-  );
+  private readonly stripe: any;
 
-  constructor(private readonly configService: ConfigService) {}
+  constructor(private readonly configService: ConfigService) {
+    const secret = this.configService.get<string>('STRIPE_SECRET_KEY');
+
+    if (!secret) {
+      throw new Error('STRIPE_SECRET_KEY is missing');
+    }
+
+    this.stripe = new Stripe(secret);
+  }
 
   async createCharge({ card, amount }: PaymentsCreateChargeDto) {
     const paymentMethod = await this.stripe.paymentMethods.create({
@@ -21,6 +24,7 @@ export class PaymentsService {
     });
 
     const paymentIntent = await this.stripe.paymentIntents.create({
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       payment_method: paymentMethod.id,
       amount: amount * 100,
       confirm: true,

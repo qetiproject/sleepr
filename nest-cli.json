@@ -26,6 +26,15 @@
         "tsConfigPath": "libs/common/tsconfig.lib.json"
       }
     },
+    "peyments": {
+      "type": "application",
+      "root": "apps/peyments",
+      "entryFile": "main",
+      "sourceRoot": "apps/peyments/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/peyments/tsconfig.app.json"
+      }
+    },
     "reservations": {
       "type": "application",
       "root": "apps/reservations",

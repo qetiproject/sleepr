@@ -25,7 +25,7 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @MessagePattern('authenticate')
-  async authenticate(@Payload() data: any) {
+  authenticate(@Payload() data: { user: UserDocument }) {
     return data.user;
   }
 }

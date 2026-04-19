@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import Joi from 'joi';
 import { PeymentsController } from './peyments.controller';
-import { PeymentsService } from './peyments.service';
+import { PaymentsService } from './peyments.service';
 
 @Module({
   imports: [
@@ -11,11 +11,12 @@ import { PeymentsService } from './peyments.service';
       isGlobal: true,
       validationSchema: Joi.object({
         PORT: Joi.number().required(),
+        STRIPE_SECRET_KEY: Joi.string().required(),
       }),
     }),
     LoggerModule,
   ],
   controllers: [PeymentsController],
-  providers: [PeymentsService],
+  providers: [PaymentsService],
 })
 export class PeymentsModule {}

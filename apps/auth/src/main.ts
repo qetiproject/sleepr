@@ -13,6 +13,6 @@ async function bootstrap() {
   app.use(cookieParser());
   app.useLogger(app.get(Logger));
   const configService = app.get(ConfigService);
-  await app.listen(configService.get('PORT') || 3001);
+  await app.listen(configService.get('HTTP_PORT') || 3001);
 }
 bootstrap();

@@ -1,7 +1,7 @@
 import { Controller, UsePipes, ValidationPipe } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { PaymentsService } from './payments.service';
 import { PaymentsCreateChargeDto } from './dto/payments-create-charge.dto';
+import { PaymentsService } from './payments.service';
 
 @Controller()
 export class PaymentsController {
@@ -10,6 +10,7 @@ export class PaymentsController {
   @MessagePattern('create_charge')
   @UsePipes(new ValidationPipe())
   async createCharge(@Payload() data: PaymentsCreateChargeDto) {
-    return this.paymentsService.createCharge(data);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return await this.paymentsService.createCharge(data);
   }
 }

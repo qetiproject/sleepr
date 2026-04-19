@@ -3,23 +3,20 @@ import { AUTH_SERVICE, PAYMENTS_SERVICE } from '@app/common/constants';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import Joi from 'joi';
+import * as Joi from 'joi';
 import {
   ReservationDocument,
   ReservationSchema,
 } from './models/reservation.schema';
-import { ReservationsRepository } from './reservation.repository';
 import { ReservationsController } from './reservations.controller';
+import { ReservationsRepository } from './reservations.repository';
 import { ReservationsService } from './reservations.service';
 
 @Module({
   imports: [
     DatabaseModule,
     DatabaseModule.forFeature([
-      {
-        name: ReservationDocument.name,
-        schema: ReservationSchema,
-      },
+      { name: ReservationDocument.name, schema: ReservationSchema },
     ]),
     LoggerModule,
     ConfigModule.forRoot({
@@ -28,34 +25,30 @@ import { ReservationsService } from './reservations.service';
         MONGODB_URI: Joi.string().required(),
         PORT: Joi.number().required(),
         AUTH_HOST: Joi.string().required(),
-        AUTH_PORT: Joi.number().required(),
         PAYMENTS_HOST: Joi.string().required(),
+        AUTH_PORT: Joi.number().required(),
         PAYMENTS_PORT: Joi.number().required(),
       }),
     }),
     ClientsModule.registerAsync([
       {
-        name: AUTH_SERVICE,
+        name: AUTH_SERVICE as string,
         useFactory: (configService: ConfigService) => ({
           transport: Transport.TCP,
           options: {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            host: configService.get('AUTH_HOST'),
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            port: configService.get('AUTH_PORT'),
+            host: configService.get('AUTH_HOST') as number,
+            port: configService.get('AUTH_PORT') as number,
           },
         }),
         inject: [ConfigService],
       },
       {
-        name: PAYMENTS_SERVICE,
+        name: PAYMENTS_SERVICE as string,
         useFactory: (configService: ConfigService) => ({
           transport: Transport.TCP,
           options: {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            host: configService.get('PAYMENTS_HOST'),
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            port: configService.get('PAYMENTS_PORT'),
+            host: configService.get('PAYMENTS_HOST') as number,
+            port: configService.get('PAYMENTS_PORT') as number,
           },
         }),
         inject: [ConfigService],

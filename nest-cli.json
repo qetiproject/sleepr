@@ -26,13 +26,13 @@
         "tsConfigPath": "libs/common/tsconfig.lib.json"
       }
     },
-    "peyments": {
+    "payments": {
       "type": "application",
-      "root": "apps/peyments",
+      "root": "apps/payments",
       "entryFile": "main",
-      "sourceRoot": "apps/peyments/src",
+      "sourceRoot": "apps/payments/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/peyments/tsconfig.app.json"
+        "tsConfigPath": "apps/payments/tsconfig.app.json"
       }
     },
     "reservations": {

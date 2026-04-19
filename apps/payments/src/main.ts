@@ -2,10 +2,10 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { Transport } from '@nestjs/microservices';
 import { Logger } from 'nestjs-pino';
-import { PeymentsModule } from './peyments.module';
+import { PaymentsModule } from './payments.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(PeymentsModule);
+  const app = await NestFactory.create(PaymentsModule);
   const configService = app.get(ConfigService);
   app.connectMicroservice({
     transport: Transport.TCP,
@@ -19,3 +19,4 @@ async function bootstrap() {
   await app.startAllMicroservices();
 }
 bootstrap();
+

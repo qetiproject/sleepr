@@ -2,8 +2,8 @@ import { LoggerModule } from '@app/common';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import Joi from 'joi';
-import { PeymentsController } from './peyments.controller';
-import { PaymentsService } from './peyments.service';
+import { PaymentsController } from './payments.controller';
+import { PaymentsService } from './payments.service';
 
 @Module({
   imports: [
@@ -16,7 +16,7 @@ import { PaymentsService } from './peyments.service';
     }),
     LoggerModule,
   ],
-  controllers: [PeymentsController],
+  controllers: [PaymentsController],
   providers: [PaymentsService],
 })
-export class PeymentsModule {}
+export class PaymentsModule {}

@@ -6,15 +6,16 @@ COPY package.json ./
 COPY pnpm-lock.yaml ./
 COPY tsconfig.json tsconfig.json
 COPY nest-cli.json nest-cli.json
+COPY apps/notifications/package.json apps/notifications/package.json
 
 RUN npm install -g pnpm
 
 RUN pnpm install
 
-COPY apps/reservations apps/reservations
+COPY apps/notifications apps/notifications
 COPY libs libs
 
-RUN pnpm run build reservations
+RUN pnpm run build notifications
 
 FROM node:alpine as production
 
@@ -25,6 +26,7 @@ WORKDIR /usr/src/app
 
 COPY package.json ./
 COPY pnpm-lock.yaml ./
+COPY apps/notifications/package.json apps/notifications/package.json
 
 RUN npm install -g pnpm
 
@@ -32,4 +34,4 @@ RUN pnpm install --prod
 
 COPY --from=development /usr/src/app/dist ./dist
 
-CMD ["node", "dist/apps/reservations/main"]
+CMD ["node", "dist/apps/notifications/main"]

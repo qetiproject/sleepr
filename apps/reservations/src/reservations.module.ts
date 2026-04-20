@@ -36,8 +36,8 @@ import { ReservationsService } from './reservations.service';
         useFactory: (configService: ConfigService) => ({
           transport: Transport.TCP,
           options: {
-            host: configService.get('AUTH_HOST') as string,
-            port: configService.get('AUTH_PORT') as number,
+            host: configService.get<string>('AUTH_HOST'),
+            port: configService.get<number>('AUTH_PORT'),
           },
         }),
         inject: [ConfigService],
@@ -47,8 +47,8 @@ import { ReservationsService } from './reservations.service';
         useFactory: (configService: ConfigService) => ({
           transport: Transport.TCP,
           options: {
-            host: configService.get('PAYMENTS_HOST') as string,
-            port: configService.get('PAYMENTS_PORT') as number,
+            host: configService.get<string>('PAYMENTS_HOST'),
+            port: configService.get<number>('PAYMENTS_PORT'),
           },
         }),
         inject: [ConfigService],

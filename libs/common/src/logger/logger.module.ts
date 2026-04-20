@@ -5,6 +5,7 @@ import { LoggerModule as PinoLogger } from 'nestjs-pino';
   imports: [
     PinoLogger.forRoot({
       pinoHttp: {
+        level: 'error',
         transport: {
           target: 'pino-pretty',
           options: { singleLine: true, colorize: true },

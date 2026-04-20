@@ -2,7 +2,7 @@ import { UserDto } from '@app/common';
 import { PAYMENTS_SERVICE } from '@app/common/constants';
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { map } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { CreateReservationDto } from './dto/create-reservation.dto';
 import { UpdateReservationDto } from './dto/update-reservation.dto';
 import { ReservationsRepository } from './reservations.repository';
@@ -18,21 +18,19 @@ export class ReservationsService {
     createReservationDto: CreateReservationDto,
     { email, _id: userId }: UserDto,
   ) {
-    return this.paymentsService
-      .send('create_charge', {
+    const res = await firstValueFrom(
+      this.paymentsService.send('create_charge', {
         ...createReservationDto.charge,
         email,
-      })
-      .pipe(
-        map((res) => {
-          return this.reservationsRepository.create({
-            ...createReservationDto,
-            invoiceId: res.id,
-            timestamp: new Date(),
-            userId,
-          });
-        }),
-      );
+      }),
+    );
+
+    return this.reservationsRepository.create({
+      ...createReservationDto,
+      invoiceId: res.id,
+      timestamp: new Date(),
+      userId,
+    });
   }
 
   async findAll() {

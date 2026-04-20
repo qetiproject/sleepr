@@ -24,15 +24,12 @@ export class PaymentsService {
   }
 
   async createCharge({ card, amount, email }: PaymentsCreateChargeDto) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     const paymentMethod = await this.stripe.paymentMethods.create({
       type: 'card',
       card,
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     const paymentIntent = await this.stripe.paymentIntents.create({
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
       payment_method: paymentMethod.id,
       amount: amount * 100,
       confirm: true,
@@ -40,9 +37,11 @@ export class PaymentsService {
       currency: 'usd',
     });
 
-    this.notificationsService.emit('notify_email', { email });
+    this.notificationsService.emit('notify_email', {
+      email,
+      text: `Your payment of $${amount} has completed successfully.`,
+    });
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return paymentIntent;
   }
 }

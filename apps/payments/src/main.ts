@@ -11,8 +11,7 @@ async function bootstrap() {
     transport: Transport.TCP,
     options: {
       host: '0.0.0.0',
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      port: configService.get('PORT'),
+      port: +configService.get('PORT'),
     },
   });
   app.useLogger(app.get(Logger));

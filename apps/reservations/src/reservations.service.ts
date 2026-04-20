@@ -14,7 +14,7 @@ export class ReservationsService {
     @Inject(PAYMENTS_SERVICE) private readonly paymentsService: ClientProxy,
   ) {}
 
-  create(
+  async create(
     createReservationDto: CreateReservationDto,
     { email, _id: userId }: UserDto,
   ) {
@@ -25,14 +25,8 @@ export class ReservationsService {
       })
       .pipe(
         map((res) => {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          if (!res.id) {
-            throw new Error('Payment service did not return invoice id');
-          }
-
           return this.reservationsRepository.create({
             ...createReservationDto,
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
             invoiceId: res.id,
             timestamp: new Date(),
             userId,

@@ -11,6 +11,6 @@ async function bootstrap() {
   app.useLogger(app.get(Logger));
   app.use(cookieParser());
   const configService = app.get(ConfigService);
-  await app.listen(configService.get('PORT') as number);
+  await app.listen(configService.get('PORT'));
 }
 bootstrap();

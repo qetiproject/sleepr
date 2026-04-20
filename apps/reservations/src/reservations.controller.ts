@@ -23,20 +23,19 @@ export class ReservationsController {
     @Body() createReservationDto: CreateReservationDto,
     @CurrentUser() user: UserDto,
   ) {
-    // eslint-disable-next-line @typescript-eslint/await-thenable
     return await this.reservationsService.create(createReservationDto, user);
   }
 
   @Get()
   @UseGuards(JwtAuthGuard)
   async findAll() {
-    return this.reservationsService.findAll();
+    return await this.reservationsService.findAll();
   }
 
   @Get(':id')
   @UseGuards(JwtAuthGuard)
   async findOne(@Param('id') id: string) {
-    return this.reservationsService.findOne(id);
+    return await this.reservationsService.findOne(id);
   }
 
   @Patch(':id')
@@ -45,12 +44,12 @@ export class ReservationsController {
     @Param('id') id: string,
     @Body() updateReservationDto: UpdateReservationDto,
   ) {
-    return this.reservationsService.update(id, updateReservationDto);
+    return await this.reservationsService.update(id, updateReservationDto);
   }
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
   async remove(@Param('id') id: string) {
-    return this.reservationsService.remove(id);
+    return await this.reservationsService.remove(id);
   }
 }

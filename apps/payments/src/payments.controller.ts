@@ -10,7 +10,6 @@ export class PaymentsController {
   @MessagePattern('create_charge')
   @UsePipes(new ValidationPipe())
   async createCharge(@Payload() data: PaymentsCreateChargeDto) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return await this.paymentsService.createCharge(data);
+    return this.paymentsService.createCharge(data);
   }
 }

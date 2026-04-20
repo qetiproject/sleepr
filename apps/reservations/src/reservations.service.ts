@@ -1,4 +1,5 @@
-import { PAYMENTS_SERVICE, UserDto } from '@app/common';
+import { UserDto } from '@app/common';
+import { PAYMENTS_SERVICE } from '@app/common/constants';
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { map } from 'rxjs';

@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ClientProxy } from '@nestjs/microservices';
 import Stripe from 'stripe';
+import { PaymentsCreateChargeDto } from './dto/payments-create-charge.dto';
 
 @Injectable()
 export class PaymentsService {
@@ -18,7 +19,7 @@ export class PaymentsService {
     });
   }
 
-  async createCharge({ card, amount, email }: any) {
+  async createCharge({ card, amount, email }: PaymentsCreateChargeDto) {
     try {
       const paymentMethod = await this.stripe.paymentMethods.create({
         type: 'card',

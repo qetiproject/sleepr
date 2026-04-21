@@ -20,7 +20,7 @@ export class ReservationsService {
   ) {
     const res = await firstValueFrom(
       this.paymentsService.send('create_charge', {
-        ...createReservationDto.charge,
+        amount: createReservationDto.amount,
         email,
       }),
     );
@@ -28,6 +28,7 @@ export class ReservationsService {
     return this.reservationsRepository.create({
       ...createReservationDto,
       invoiceId: res.id,
+      paymentStatus: res.status,
       timestamp: new Date(),
       userId,
     });

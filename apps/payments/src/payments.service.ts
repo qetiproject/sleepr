@@ -18,30 +18,22 @@ export class PaymentsService {
       apiVersion: null,
     });
   }
+  async createCharge({ amount, email }: PaymentsCreateChargeDto) {
+    const paymentIntent = await this.stripe.paymentIntents.create({
+      amount: amount * 100,
+      currency: 'usd',
 
-  async createCharge({ card, amount, email }: PaymentsCreateChargeDto) {
-    try {
-      const paymentMethod = await this.stripe.paymentMethods.create({
-        type: 'card',
-        card,
-      });
+      payment_method_types: ['card'],
 
-      const paymentIntent = await this.stripe.paymentIntents.create({
-        payment_method: paymentMethod.id,
-        amount: amount * 100,
-        confirm: true,
-        payment_method_types: ['card'],
-        currency: 'usd',
-      });
-
-      this.notificationsService.emit('notify_email', {
+      metadata: {
         email,
-        text: `Your payment of $${amount} has completed successfully.`,
-      });
+      },
+    });
 
-      return paymentIntent;
-    } catch (err) {
-      throw err;
-    }
+    return {
+      id: paymentIntent.id,
+      clientSecret: paymentIntent.client_secret,
+      status: paymentIntent.status,
+    };
   }
 }

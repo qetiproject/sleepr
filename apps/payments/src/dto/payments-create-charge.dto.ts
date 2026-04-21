@@ -1,7 +1,9 @@
-import { CreateChargeDto } from '@app/common';
-import { IsEmail } from 'class-validator';
+import { IsEmail, IsNumber } from 'class-validator';
 
-export class PaymentsCreateChargeDto extends CreateChargeDto {
+export class PaymentsCreateChargeDto {
   @IsEmail()
   email: string;
+
+  @IsNumber()
+  amount: number;
 }

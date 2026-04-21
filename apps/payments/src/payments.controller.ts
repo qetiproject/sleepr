@@ -10,6 +10,12 @@ export class PaymentsController {
   @MessagePattern('create_charge')
   @UsePipes(new ValidationPipe())
   async createCharge(@Payload() data: PaymentsCreateChargeDto) {
-    return this.paymentsService.createCharge(data);
+    try {
+      const result = await this.paymentsService.createCharge(data);
+      return result;
+    } catch (err) {
+      console.error('error - ', err);
+      throw err;
+    }
   }
 }

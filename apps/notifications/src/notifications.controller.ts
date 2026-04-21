@@ -9,9 +9,7 @@ export class NotificationsController {
 
   @UsePipes(new ValidationPipe())
   @EventPattern('notify_email')
-  // eslint-disable-next-line @typescript-eslint/require-await
   async notifyEmail(@Payload() data: NotifyEmailDto) {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     this.notificationsService.notifyEmail(data);
   }
 }
